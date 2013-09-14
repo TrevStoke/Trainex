@@ -20,6 +20,13 @@ SET time_zone = "+00:00";
 -- Database: `trainex_01`
 --
 
+CREATE TABLE cake_sessions (
+  id varchar(255) NOT NULL default '',
+  data text,
+  expires int(11) default NULL,
+  PRIMARY KEY  (id)
+);
+
 -- --------------------------------------------------------
 
 --
