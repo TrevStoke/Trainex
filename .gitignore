@@ -1,0 +1,25 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# CakePHP ignores #
+#################
+tmp/*
+[Cc]onfig/core.php
+[Cc]onfig/database.php
+[Cc]onfig/email.php
+app/tmp/*
+app/[Cc]onfig/core.php
+app/[Cc]onfig/database.php
+app/[Cc]onfig/email.php
+!empty
+
+# PhpStorm ignores #
+#################
+.idea/*
