@@ -31,11 +31,24 @@ class EmployeeFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'name' => 'Andrew Cornes',
 			'active' => 1,
 			'created' => '2013-09-16 14:28:05',
-			'modified' => '2013-09-16 14:28:05'
+			'modified' => '2013-09-16 14:28:05',
+		),
+		array(
+			'id' => 2,
+			'name' => 'Trevor Adams',
+			'active' => 1,
+			'created' => '2013-09-16 14:28:05',
+			'modified' => '2013-09-16 14:28:05',
+		),
+		array(
+			'id' => 3,
+			'name' => 'Karen Woods',
+			'active' => 0,
+			'created' => '2013-09-16 14:28:05',
+			'modified' => '2013-09-16 14:28:05',
 		),
 	);
-
 }
