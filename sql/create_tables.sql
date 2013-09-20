@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2013 at 01:16 PM
+-- Generation Time: Sep 20, 2013 at 03:40 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `common_skills` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `mentors` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,6 +147,29 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `retrain_reminders`
+--
+
+DROP TABLE IF EXISTS `retrain_reminders`;
+CREATE TABLE IF NOT EXISTS `retrain_reminders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trainee_id` int(11) NOT NULL,
+  `completion_plan_id` int(11) NOT NULL,
+  `completion_occurred` date NOT NULL,
+  `retrain_plan_id` int(11) NOT NULL,
+  `retrain_due` date NOT NULL,
+  `retrain_plan_assigned` int(11) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `trainee_id` (`trainee_id`),
+  KEY `completion_plan_id` (`completion_plan_id`),
+  KEY `retrain_plan_id` (`retrain_plan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -165,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `skills` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -200,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `skill_grades` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -217,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `supervisors` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -234,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `trainees` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -252,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `trainees_plans` (
   PRIMARY KEY (`id`),
   KEY `trainee_id` (`trainee_id`),
   KEY `plan_id` (`plan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
