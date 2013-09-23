@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 20, 2013 at 03:40 PM
+-- Generation Time: Sep 23, 2013 at 02:05 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `assessments` (
   `mentor_id` int(11) NOT NULL,
   `supervisor_id` int(11) NOT NULL,
   `occurred` date NOT NULL,
-  `completion_status` int(11) NOT NULL,
+  `completion_status_id` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `assessments` (
   KEY `mentor_id` (`mentor_id`),
   KEY `supervisor_id` (`supervisor_id`),
   KEY `occurred` (`occurred`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -79,38 +79,35 @@ CREATE TABLE IF NOT EXISTS `common_skills` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `completion_statuses`
+--
+
+DROP TABLE IF EXISTS `completion_statuses`;
+CREATE TABLE IF NOT EXISTS `completion_statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employees`
 --
 
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  KEY `last_name` (`last_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `latest_plan_completions`
---
-
-DROP TABLE IF EXISTS `latest_plan_completions`;
-CREATE TABLE IF NOT EXISTS `latest_plan_completions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `trainee_id` int(11) NOT NULL,
-  `plan_id` int(11) NOT NULL,
-  `completion` date NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `employee_id` (`trainee_id`),
-  KEY `plan_id` (`plan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -170,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `retrain_reminders` (
   KEY `trainee_id` (`trainee_id`),
   KEY `completion_plan_id` (`completion_plan_id`),
   KEY `retrain_plan_id` (`retrain_plan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -207,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `skill_assessments` (
   PRIMARY KEY (`id`),
   KEY `skill_id` (`skill_id`),
   KEY `assessment_id` (`assessment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

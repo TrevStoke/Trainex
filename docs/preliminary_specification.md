@@ -59,7 +59,8 @@ Because of the historical nature of the assessment record, some of the database 
 	-	'code': A skill code (e.g., 'LOOSE-DEPOT-RIM-X').
 	-	'description': A skill description (e.g., 'Mount/demount tyres to loose wheel rims of type X').
 -	Employees, consisting of:
-	-	'name': The employee's name.
+	-	'first_name': The employee's first name.
+	-	'last_name': The employee's last name.
 	-	'active': A flag indicating whether the employee is currently available for adding as a trainee, mentor or supervisor.
 -	Trainees, consisting of:
 	-	'employee_id': The trainee's employee id.
@@ -86,13 +87,15 @@ Because of the historical nature of the assessment record, some of the database 
 -	Supervisors, consisting of:
 	-	'employee_id': The supervisor's employee id.
 	-	'active': A flag indicating whether the supervisor is currently available for associating with assessments etc.
+-	Completion statuses, consisting of:
+	-	'name': The name of the status (i.e., 'Not yet completed', 'Successful completion' and 'FAILED completion').
 -	Assessments (an historical record of assessment submissions), consisting of:
 	-	'plan_id': A plan id.
 	-	'trainee_id': A trainee id.
 	-	'mentor_id': A mentor id.
 	-	'supervisor_id': A supervisor id.
 	-	'occurred': The date of the assessment.
-	-	'completion_status': The completion status resulting from this assessment (at present: 'incomplete,' 'passed' or 'failed').
+	-	'completion_status_id': The id of the completion status resulting from this assessment.
 -	Skill grades, consisting of:
 	-	'grade': Grade representation (at present: grade letter).
 	-	'description': Meaning of grade.
@@ -285,7 +288,7 @@ Lists those assessments that represent training plan completion, showing their a
 
 ###	Produce a Retraining Report
 
-The report lists all trainees who are now due (or overdue?) to be assigned to a training plan.
+The report lists all active trainees who are now due (or overdue) to be assigned to a training plan.
 
 #	Algorithm Notes
 
