@@ -11,7 +11,7 @@ class Employee extends AppModel {
  *
  * @var string
  */
-	public $displayField = 'name';
+//	public $displayField = 'name';
 
 	public $validate = array(
 		'active' => array(
@@ -22,6 +22,23 @@ class Employee extends AppModel {
 				'allowEmpty' => TRUE,
 			),
 		),
+		'first_name' => array(
+			'length' => array(
+				'rule' => array('between', 2, 50),
+				'message' => 'Length range: %s to %s',
+				'required' => 'create',
+				'allowEmpty' => FALSE,
+			),
+		),
+		'last_name' => array(
+			'length' => array(
+				'rule' => array('between', 2, 50),
+				'message' => 'Length range: %s to %s',
+				'required' => 'create',
+				'allowEmpty' => FALSE,
+			),
+		),
+		/*
 		'name' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
@@ -34,7 +51,19 @@ class Employee extends AppModel {
 				'message' => 'Valid length range: %s to %s',
 			),
 		),
+		*/
 	);
+
+	/*
+	public function __construct($id = FALSE, $table = NULL, $ds = NULL)
+	{
+		parent::__construct($id, $table, $ds);
+		$alias = $this->alias;
+		$this->virtualFields = array(
+			'name' => "CONCAT($alias.first_name, ' ', $alias.last_name)",
+		);
+	}
+	*/
 
 	public function findActive()
 	{
