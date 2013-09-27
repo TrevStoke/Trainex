@@ -41,14 +41,14 @@ class EmployeeFixture extends CakeTestFixture {
 		array(
 			'id' => '2',
 			'first_name' => 'Faith',
-			'last_name' => 'McRory',
+			'last_name' => 'Crick',
 			'active' => '1',
 			'created' => '2013-09-20 10:13:47',
 			'modified' => '2013-09-20 10:13:47'
 		),
 		array(
 			'id' => '3',
-			'first_name' => 'David',
+			'first_name' => 'Daniel',
 			'last_name' => 'Crick',
 			'active' => '1',
 			'created' => '2013-09-20 10:15:04',

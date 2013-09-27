@@ -5,6 +5,8 @@ App::uses('AppModel', 'Model');
  *
  */
 class Employee extends AppModel {
+	// 'UniqueCompositeBehavior' for 'isUniqueComposite()' validation.
+	public $actsAs = array('UniqueComposite');
 
 /**
  * Display field
@@ -29,6 +31,11 @@ class Employee extends AppModel {
 				'required' => 'create',
 				'allowEmpty' => FALSE,
 			),
+			'isUniqueComposite' => array(
+				'rule' => array('isUniqueComposite',
+					array('first_name', 'last_name')),
+				'message' => array('Record with those values already exists'),
+			),
 		),
 		'last_name' => array(
 			'length' => array(
@@ -37,21 +44,12 @@ class Employee extends AppModel {
 				'required' => 'create',
 				'allowEmpty' => FALSE,
 			),
-		),
-		/*
-		'name' => array(
-			'isUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'Should be unique',
-				'required' => 'create',
-				'allowEmpty' => FALSE,
-			),
-			'length' => array(
-				'rule' => array('between', 4, 50),
-				'message' => 'Valid length range: %s to %s',
+			'isUniqueComposite' => array(
+				'rule' => array('isUniqueComposite',
+					array('first_name', 'last_name')),
+				'message' => array('Record with those values already exists'),
 			),
 		),
-		*/
 	);
 
 	/*
