@@ -52,7 +52,6 @@ class Employee extends AppModel {
 		),
 	);
 
-	/*
 	public function __construct($id = FALSE, $table = NULL, $ds = NULL)
 	{
 		parent::__construct($id, $table, $ds);
@@ -61,7 +60,6 @@ class Employee extends AppModel {
 			'name' => "CONCAT($alias.first_name, ' ', $alias.last_name)",
 		);
 	}
-	*/
 
 	public function findActive()
 	{
@@ -70,6 +68,27 @@ class Employee extends AppModel {
 				'active' => 1,
 			),
 		));
+	}
+
+	public function findCurrent()
+	{
+		if (isset($this->id) == FALSE)
+		{
+			throw new NotFoundException('No employee specified');
+		}
+
+		$employee = $this->find('first', array(
+			'conditions' => array(
+				'id' => $this->id,
+			),
+		));
+
+		if (count($employee) == 0)
+		{
+			throw new NotFoundException('No employee specified');
+		}
+
+		return $employee;
 	}
 
 	public function findInactive()
