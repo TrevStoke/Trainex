@@ -106,7 +106,7 @@ Because of the historical nature of the assessment record, some of the database 
 
 Note: it may be useful to adopt the practice of appending two- or three-digit numbers onto the end of plan- and skill codes, so that replacement versions of a given entity can be given new codes that are similar enough to be recognisable while still being different.
 
-#	Main UI Operations
+#	Main Operations Available Via the UI
 
 ##	Common Skills
 
@@ -284,11 +284,76 @@ Provides more detailed information about a single assessment including full skil
 
 Lists those assessments that represent training plan completion, showing their associated plans, mentors, supervisors and grade summaries.
 
+##	Retrain Reminders
+
+###	List Retrain Reminders
+
+Produce a list of retrain reminders, optionally specifying the number of months' advanced warning required. (A per trainee version of this list is available when viewing more trainee details.) The generic version of this list is presumably more or less the same as a 'Retraining Report'.
+
+###	Delete a Retrain Reminder
+
+As retrain reminders are not part of the historical assessment record, they may be freely deleted, although a suitable warning should be issued that such a deletion cannot be undone. (This operation will likely be available from both the general list and trainee-specific list of retrain reminders.)
+
+###	Create a New Retrain Reminder
+
+Retrain reminders are normally created automatically as a consequence of a trainee's completion of a training plan for which there are retraining details specified, but it is possible to manually create a retrain reminder for a specific trainee. (This operation will most likely be available from the view more trainee details page.)
+
 ##	Reports
 
 ###	Produce a Retraining Report
 
 The report lists all active trainees who are now due (or overdue) to be assigned to a training plan.
+
+#	Suggested UI Structure
+
+-	Dashboard
+	-	Personnel Management
+		-	Employees (tabs: 'list active', 'list inactive')
+			-	Create employee [side nav, 'list active' tab only]
+			-	Edit employee [row nav]
+			-	More [row nav]
+				-	Activate employee [side nav, if employee is inactive]
+				-	Deactivate employee [side nav, if employee is active]
+		-	Trainees (tabs: 'list active', 'list inactive')
+			-	Create trainee [side nav, 'list active' tab only]
+			-	More [row nav] ('list associated plans', 'list associated retrain reminders')
+				-	Assign trainee to plan [side nav, if trainee is active]
+				-	Generate assessment sheet [side nav, if trainee is active]
+				-	Submit assessment [side nav, if trainee is active]
+				-	View assessment history, full or completions only [side nav, active or inactive]
+					-	More, including grade detail [row nav]
+				-	Activate trainee [side nav, if trainee is inactive]
+				-	Deactivate trainee [side nav, if trainee is active]
+				-	Deassign trainee from plan [plan row nav]
+				-	Create retrain reminder [side nav, if trainee is active]
+				-	Delete retrain reminder [reminder row nav]
+		-	Mentors
+			-	Create mentor [side nav, 'list active' tab only]
+			-	More [row nav]
+				-	Activate mentor [side nav, if mentor is inactive]
+				-	Deactivate mentor [side nav, if mentor is active]
+		-	Supervisors
+			-	Create supervisor [side nav, 'list active' tab only]
+			-	More [row nav]
+				-	Activate supervisor [side nav, if supervisor is inactive]
+				-	Deactivate supervisor [side nav, if supervisor is active]
+	-	Plan Management
+		-	Common Skills ('list all')
+			-	Create common skill [side nav]
+			-	Delete common skill [row nav]
+			-	Edit common skill [row nav]
+		-	Plans (tabs: 'list active', 'list inactive')
+			-	Create plan [side nav, 'list active' tab only]
+			-	Create skill for recently created plan [side nav, 'list active' tab only]
+			-	Edit plan [row nav]
+			-	More [row nav] ('list associated skills')
+				-	Activate plan [side nav, if plan is inactive]
+				-	Deactivate plan [side nav, if plan is active]
+				-	Edit skill [row nav]
+		-	Retrain Reminders ('list due soon and overdue')
+			-	List all [side nav]
+			-	Create reminder [side nav]
+			-	Delete reminder [row nav]
 
 #	Algorithm Notes
 

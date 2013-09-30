@@ -4,7 +4,7 @@ App::uses('ModelBehavior', 'Model');
 class UniqueCompositeBehavior extends ModelBehavior
 {
 	public function isUniqueComposite(Model $model,
-		$validatesField, $columnNames)
+		$validateField, $columnNames)
 	{
 		$modelDataFields = $model->data[$model->alias];
 		$newCompositeValues = array();

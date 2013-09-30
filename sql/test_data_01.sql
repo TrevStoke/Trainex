@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 23, 2013 at 02:05 PM
+-- Generation Time: Sep 27, 2013 at 03:50 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -240,8 +240,8 @@ INSERT INTO `trainees` (`id`, `employee_id`, `active`, `created`, `modified`) VA
 --
 
 INSERT INTO `trainees_plans` (`id`, `trainee_id`, `plan_id`, `created`, `modified`) VALUES
-(1, 5, 5, '2013-09-20 12:44:50', '2013-09-20 12:44:50'),
-(2, 5, 1, '2013-09-20 12:44:50', '2013-09-20 12:44:50'),
+(1, 2, 5, '2013-09-20 12:44:50', '2013-09-20 12:44:50'),
+(2, 2, 1, '2013-09-20 12:44:50', '2013-09-20 12:44:50'),
 (3, 1, 2, '2013-09-20 13:11:27', '2013-09-20 13:11:27'),
 (4, 3, 2, '2013-09-20 13:11:27', '2013-09-20 13:11:27'),
 (5, 5, 3, '2013-09-20 13:13:24', '2013-09-20 13:13:24'),
