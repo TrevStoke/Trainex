@@ -13,7 +13,7 @@ class Employee extends AppModel {
  *
  * @var string
  */
-//	public $displayField = 'name';
+	public $displayField = 'name';
 
 	public $validate = array(
 		'active' => array(
@@ -34,7 +34,8 @@ class Employee extends AppModel {
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
 					array('first_name', 'last_name')),
-				'message' => array('Record with those values already exists'),
+				'message' =>
+					array('A record with those values already exists'),
 			),
 		),
 		'last_name' => array(
@@ -72,9 +73,9 @@ class Employee extends AppModel {
 
 	public function findCurrent()
 	{
-		if (isset($this->id) == FALSE)
+		if (isset($this->id) == FALSE || $this->id === FALSE)
 		{
-			throw new NotFoundException('No employee specified');
+			throw new NotFoundException('No employee id specified');
 		}
 
 		$employee = $this->find('first', array(
@@ -85,7 +86,7 @@ class Employee extends AppModel {
 
 		if (count($employee) == 0)
 		{
-			throw new NotFoundException('No employee specified');
+			throw new NotFoundException('Employee not found');
 		}
 
 		return $employee;

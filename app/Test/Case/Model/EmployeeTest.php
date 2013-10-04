@@ -40,14 +40,17 @@ class EmployeeTest extends CakeTestCase {
 
 	public function testBadActive()
 	{
+		$this->Employee->create();
 		$this->Employee->set(array('active' => -1));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), FALSE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => 2));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), FALSE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => '2'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), FALSE);
@@ -56,11 +59,13 @@ class EmployeeTest extends CakeTestCase {
 	public function testBadFirstNameLength()
 	{
 		// Too short.
+		$this->Employee->create();
 		$this->Employee->set(array('first_name' => '1'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), FALSE);
 
 		// Too long: 51 chars.
+		$this->Employee->create();
 		$this->Employee->set(array('first_name' =>
 			'123456789 123456789 123456789 123456789 123456789 1'));
 		$this->assertEqual($this->Employee->validates(array(
@@ -70,11 +75,13 @@ class EmployeeTest extends CakeTestCase {
 	public function testBadLastNameLength()
 	{
 		// Too short.
+		$this->Employee->create();
 		$this->Employee->set(array('last_name' => '1'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), FALSE);
 
 		// Too long: 51 chars.
+		$this->Employee->create();
 		$this->Employee->set(array('last_name' =>
 			'123456789 123456789 123456789 123456789 123456789 1'));
 		$this->assertEqual($this->Employee->validates(array(
@@ -84,6 +91,7 @@ class EmployeeTest extends CakeTestCase {
 	public function testBadNameDuplicate()
 	{
 		// 'Daniel Morton' already exists.
+		$this->Employee->create();
 		$this->Employee->set(array(
 			'first_name' => 'Daniel',
 			'last_name' => 'Morton',
@@ -92,14 +100,59 @@ class EmployeeTest extends CakeTestCase {
 			array('first_name', 'last_name'))), FALSE);
 
 		// 'Faith Crick' becoming 'Daniel Crick' who already exists.
+		$this->Employee->create();
 		$this->Employee->set(array('id' => '2', 'first_name' => 'Daniel'));
 		$this->assertEqual($this->Employee->validates(array('fieldList' =>
-		array('id', 'last_name'))), FALSE);
+			array('id', 'first_name'))), FALSE);
 
 		// 'Daniel Crick' becoming 'Daniel Morton' who already exists.
+		$this->Employee->create();
 		$this->Employee->set(array('id' => '3', 'last_name' => 'Morton'));
 		$this->assertEqual($this->Employee->validates(array('fieldList' =>
 			array('id', 'last_name'))), FALSE);
+	}
+
+	public function testFindActiveEmployees()
+	{
+		$expected = $this->Employee->find('all', array(
+			'conditions' => array(
+				'active' => 1,
+			),
+		));
+		$actual = $this->Employee->findActive();
+		$this->assertEqual($actual, $expected);
+	}
+
+	public function testFindCurrent()
+	{
+		$this->expectException(
+			'NotFoundException', 'No employee id specified');
+		$unused = $this->Employee->findCurrent();
+
+		$this->Employee->id = 100;
+		$this->expectException('NotFoundException', 'Employee not found');
+		$unused = $this->Employee->findCurrent();
+
+		$employeeId = 1;
+		$expected = $this->Employee->find('first', array(
+			'conditions' => array(
+				'id' => $employeeId,
+			),
+		));
+		$this->Employee->id = $employeeId;
+		$actual = $this->Employee->findCurrent();
+		$this->assertEqual($actual, $expected);
+	}
+
+	public function testFindInactiveEmployees()
+	{
+		$expected = $this->Employee->find('all', array(
+			'conditions' => array(
+				'active' => 0,
+			),
+		));
+		$actual = $this->Employee->findInactive();
+		$this->assertEqual($actual, $expected);
 	}
 
 	public function testGoodActive()
@@ -108,18 +161,22 @@ class EmployeeTest extends CakeTestCase {
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), TRUE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => 0));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), TRUE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => 1));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), TRUE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => FALSE));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), TRUE);
 
+		$this->Employee->create();
 		$this->Employee->set(array('active' => '1'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('active'))), TRUE);
@@ -131,11 +188,13 @@ class EmployeeTest extends CakeTestCase {
 	public function testGoodFirstNameLength()
 	{
 		// Minimum length: 2 chars.
+		$this->Employee->create();
 		$this->Employee->set(array('id' => '1', 'first_name' => '12'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), TRUE);
 
 		// Maximum length: 50 chars.
+		$this->Employee->create();
 		$this->Employee->set(array(
 			'id' => '1',
 			'first_name' =>
@@ -151,11 +210,13 @@ class EmployeeTest extends CakeTestCase {
 	public function testGoodLastNameLength()
 	{
 		// Minimum length: 2 chars.
+		$this->Employee->create();
 		$this->Employee->set(array('id' => '1', 'last_name' => '12'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), TRUE);
 
 		// Maximum length: 50 chars.
+		$this->Employee->create();
 		$this->Employee->set(array(
 			'id' => 1,
 			'last_name' =>
@@ -163,27 +224,5 @@ class EmployeeTest extends CakeTestCase {
 		));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), TRUE);
-	}
-
-	public function testFindActiveEmployees()
-	{
-		$expected = $this->Employee->find('all', array(
-			'conditions' => array(
-				'active' => 1,
-			),
-		));
-		$actual = $this->Employee->findActive();
-		$this->assertEqual($actual, $expected);
-	}
-
-	public function testFindInactiveEmployees()
-	{
-		$expected = $this->Employee->find('all', array(
-			'conditions' => array(
-				'active' => 0,
-			),
-		));
-		$actual = $this->Employee->findInactive();
-		$this->assertEqual($actual, $expected);
 	}
 }

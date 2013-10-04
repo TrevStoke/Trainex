@@ -3,12 +3,29 @@ App::uses('ModelBehavior', 'Model');
 
 class UniqueCompositeBehavior extends ModelBehavior
 {
+	// '$columnNames': an array of the names of the columns which are
+	// composite-unique.
+	// To cause this method only to perform the validity check once for each
+	// set of composite-unique columns, if the method finds that there's a
+	// column with a specified value earlier in the column name list than the
+	// current column, it will return 'TRUE'.
 	public function isUniqueComposite(Model $model,
 		$validateField, $columnNames)
 	{
+		// Sort column names to make sure that all calls to this method use the
+		// column name list in the same order (as part of preventing multiple
+		// validity checks for a single group of composite-unique columns).
+		sort($columnNames);
+
 		$modelDataFields = $model->data[$model->alias];
+
+		reset($validateField);
+		$thisColumnName = key($validateField);
+		$firstSpecifiedColumn = TRUE;
 		$newCompositeValues = array();
 
+Debugger::dump("Validation of: $thisColumnName");
+Debugger::dump($modelDataFields);
 		// Set up an array of all the specified values for the unique-composite
 		// columns. For an insert, this should be all of them; for an update,
 		// this may not be all.
@@ -16,10 +33,24 @@ class UniqueCompositeBehavior extends ModelBehavior
 		{
 			if (isset($modelDataFields[$columnName]) == TRUE)
 			{
+Debugger::dump("- $columnName");
+				// If the first composite unique column with a supplied value
+				// is not the column that caused this validity check to be
+				// called, then presumably the validity check has already been
+				// performed, so we can stop here.
+				if ($firstSpecifiedColumn == TRUE &&
+					$columnName != $thisColumnName)
+				{
+Debugger::dump("Validation already performed: $columnName");
+					return TRUE;
+				}
+
 				$newCompositeValues[$columnName] =
 					$modelDataFields[$columnName];
+				$firstSpecifiedColumn = FALSE;
 			}
 		}
+Debugger::dump("Validation being performed");
 
 		// If the validation is taking place due to an update, and not all of
 		// the unique-composite columns have specified values.

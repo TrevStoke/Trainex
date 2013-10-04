@@ -9,7 +9,13 @@ class EmployeesController extends AppController
 {
 	public $components = array('RequestHandler');
 
-	public function view($id = NULL)
+	public function test_v()
+	{
+		$list = $this->Employee->find('list');
+		$this->output($list);
+	}
+
+	public function view($id = FALSE)
 	{
 		$this->Employee->id = $id;
 		$employee = $this->Employee->findCurrent();
@@ -26,15 +32,5 @@ class EmployeesController extends AppController
 	{
 		$inactive = $this->Employee->findInactive();
 		$this->output($inactive);
-	}
-
-	// Private ----------------------------------------------------------------
-
-	private function output($results)
-	{
-		$this->set(array(
-			'output' => $results,
-			'_serialize' => array('output'),
-		));
 	}
 }

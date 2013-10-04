@@ -36,4 +36,20 @@ class AppController extends Controller {
 	public $components = array(
 		'DebugKit.Toolbar'
 	);
+
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+		$this->RequestHandler->renderAs($this, 'json');
+	}
+
+	// Protected --------------------------------------------------------------
+
+	protected function output($results)
+	{
+		$this->set(array(
+			'results' => $results,
+			'_serialize' => array('results'),
+		));
+	}
 }
