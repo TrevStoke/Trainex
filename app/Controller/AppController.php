@@ -34,7 +34,8 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 	public $components = array(
-		'DebugKit.Toolbar'
+		'DebugKit.Toolbar',
+		'RequestHandler',
 	);
 
 	public function beforeFilter()
@@ -50,6 +51,15 @@ class AppController extends Controller {
 		$this->set(array(
 			'results' => $results,
 			'_serialize' => array('results'),
+		));
+	}
+
+	protected function outputError($errorOutput, $httpStatus = 400)
+	{
+		$this->response->statusCode($httpStatus);
+		$this->set(array(
+			'error' => $errorOutput,
+			'_serialize' => array('error'),
 		));
 	}
 }

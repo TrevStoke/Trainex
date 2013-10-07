@@ -112,7 +112,7 @@ class EmployeeTest extends CakeTestCase {
 			array('id', 'last_name'))), FALSE);
 	}
 
-	public function testFindActiveEmployees()
+	public function testFindActive()
 	{
 		$expected = $this->Employee->find('all', array(
 			'conditions' => array(
@@ -123,28 +123,18 @@ class EmployeeTest extends CakeTestCase {
 		$this->assertEqual($actual, $expected);
 	}
 
-	public function testFindCurrent()
+	public function testFindActiveList()
 	{
-		$this->expectException(
-			'NotFoundException', 'No employee id specified');
-		$unused = $this->Employee->findCurrent();
-
-		$this->Employee->id = 100;
-		$this->expectException('NotFoundException', 'Employee not found');
-		$unused = $this->Employee->findCurrent();
-
-		$employeeId = 1;
-		$expected = $this->Employee->find('first', array(
+		$expected = $this->Employee->find('list', array(
 			'conditions' => array(
-				'id' => $employeeId,
+				'active' => 1,
 			),
 		));
-		$this->Employee->id = $employeeId;
-		$actual = $this->Employee->findCurrent();
+		$actual = $this->Employee->findActiveList();
 		$this->assertEqual($actual, $expected);
 	}
 
-	public function testFindInactiveEmployees()
+	public function testFindInactive()
 	{
 		$expected = $this->Employee->find('all', array(
 			'conditions' => array(
@@ -152,6 +142,17 @@ class EmployeeTest extends CakeTestCase {
 			),
 		));
 		$actual = $this->Employee->findInactive();
+		$this->assertEqual($actual, $expected);
+	}
+
+	public function testFindInactiveList()
+	{
+		$expected = $this->Employee->find('list', array(
+			'conditions' => array(
+				'active' => 0,
+			),
+		));
+		$actual = $this->Employee->findInactiveList();
 		$this->assertEqual($actual, $expected);
 	}
 

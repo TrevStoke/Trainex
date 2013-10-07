@@ -48,7 +48,8 @@ class Employee extends AppModel {
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
 					array('first_name', 'last_name')),
-				'message' => array('Record with those values already exists'),
+				'message' =>
+					array('A record with those values already exists'),
 			),
 		),
 	);
@@ -57,6 +58,10 @@ class Employee extends AppModel {
 	{
 		parent::__construct($id, $table, $ds);
 		$alias = $this->alias;
+		$this->order = array(
+			"$alias.last_name",
+			"$alias.first_name",
+		);
 		$this->virtualFields = array(
 			'name' => "CONCAT($alias.first_name, ' ', $alias.last_name)",
 		);
@@ -71,30 +76,27 @@ class Employee extends AppModel {
 		));
 	}
 
-	public function findCurrent()
+	public function findActiveList()
 	{
-		if (isset($this->id) == FALSE || $this->id === FALSE)
-		{
-			throw new NotFoundException('No employee id specified');
-		}
-
-		$employee = $this->find('first', array(
+		return $this->find('list', array(
 			'conditions' => array(
-				'id' => $this->id,
+				'active' => 1,
 			),
 		));
-
-		if (count($employee) == 0)
-		{
-			throw new NotFoundException('Employee not found');
-		}
-
-		return $employee;
 	}
 
 	public function findInactive()
 	{
 		return $this->find('all', array(
+			'conditions' => array(
+				'active' => 0,
+			),
+		));
+	}
+
+	public function findInactiveList()
+	{
+		return $this->find('list', array(
 			'conditions' => array(
 				'active' => 0,
 			),
