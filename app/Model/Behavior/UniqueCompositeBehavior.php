@@ -39,7 +39,8 @@ class UniqueCompositeBehavior extends ModelBehavior
 
 			if (count($currentFieldValues) == 0)
 			{
-				return FALSE;
+				return "Employee with id '" .
+					$modelDataFields[$model->primaryKey] . "' not found";
 			}
 
 			foreach ($currentFieldValues[$model->alias] as
@@ -58,7 +59,7 @@ class UniqueCompositeBehavior extends ModelBehavior
 		// "'required' => 'create'" validation for those columns).
 		if (count($newCompositeValues) != count($columnNames))
 		{
-			return FALSE;
+			return 'Not all values in unique composite specified';
 		}
 
 		// If we find a match using the supplied (and perhaps current) values,
