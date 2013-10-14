@@ -25,11 +25,15 @@ class Employee extends AppModel {
 			),
 		),
 		'first_name' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Missing or empty value',
+				'required' => 'create',
+				'allowEmpty' => FALSE, // Redundant?
+			),
 			'length' => array(
 				'rule' => array('between', 2, 50),
 				'message' => 'Length range: %s to %s',
-				'required' => 'create',
-				'allowEmpty' => FALSE,
 			),
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
@@ -39,11 +43,15 @@ class Employee extends AppModel {
 			),
 		),
 		'last_name' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Missing or empty value',
+				'required' => 'create',
+				'allowEmpty' => FALSE, // Redundant?
+			),
 			'length' => array(
 				'rule' => array('between', 2, 50),
 				'message' => 'Length range: %s to %s',
-				'required' => 'create',
-				'allowEmpty' => FALSE,
 			),
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
