@@ -35,6 +35,10 @@ class Employee extends AppModel {
 				'rule' => array('between', 2, 50),
 				'message' => 'Length range: %s to %s',
 			),
+			'validateName' => array(
+				'rule' => array('validateName'),
+				'message' => 'Invalid name',
+			),
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
 					array('first_name', 'last_name')),
@@ -52,6 +56,10 @@ class Employee extends AppModel {
 			'length' => array(
 				'rule' => array('between', 2, 50),
 				'message' => 'Length range: %s to %s',
+			),
+			'validateName' => array(
+				'rule' => array('validateName'),
+				'message' => 'Invalid name',
 			),
 			'isUniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
@@ -109,5 +117,27 @@ class Employee extends AppModel {
 				'active' => 0,
 			),
 		));
+	}
+
+	public function validateName($field)
+	{
+		$fieldValue = reset($field);
+		$errorMsg = 'Invalid format';
+
+		// '\pL': Unicode letter.
+		if (preg_match('/^\pL[\pL \'-]*\pL$/', $fieldValue) == FALSE)
+		{
+			return $errorMsg;
+		}
+
+		// Spaces, apostrophes and hyphens are allowed, but not consecutively.
+		if (strpos($fieldValue, '  ') !== FALSE ||
+			strpos($fieldValue, '\'\'') !== FALSE ||
+			strpos($fieldValue, '--') !== FALSE)
+		{
+			return $errorMsg;
+		}
+
+		return TRUE;
 	}
 }
