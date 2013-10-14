@@ -56,34 +56,106 @@ class EmployeeTest extends CakeTestCase {
 			'fieldList' => array('active'))), FALSE);
 	}
 
+	public function testBadFirstNameFormat()
+	{
+		// These tests are UPDATES (an 'id' is specified) so that it's okay for
+		// a first name to be specified without a last name.
+
+		// Invalid character: '.'.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'first_name' => 'A.'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('first_name'))), FALSE);
+
+		// Valid character, but not at end.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'first_name' => 'A-'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('first_name'))), FALSE);
+
+		// Valid character, but not at end.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'first_name' => '-A'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('first_name'))), FALSE);
+
+		// Valid character, but can't appear consecutively.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'first_name' => 'A--C'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('first_name'))), FALSE);
+	}
+
+	public function testBadLastNameFormat()
+	{
+		// These tests are UPDATES (an 'id' is specified) so that it's okay for
+		// a first name to be specified without a last name.
+
+		// Invalid character: '.'.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'last_name' => 'A.'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('last_name'))), FALSE);
+
+		// Valid character, but not at end.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'last_name' => 'A-'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('last_name'))), FALSE);
+
+		// Valid character, but not at end.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'last_name' => '-A'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('last_name'))), FALSE);
+
+		// Valid character, but can't appear consecutively.
+		$this->Employee->create();
+		$this->Employee->set(array('id' => '1', 'last_name' => 'A--C'));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('last_name'))), FALSE);
+	}
+
 	public function testBadFirstNameLength()
 	{
+		// These tests are UPDATES (an 'id' is specified) so that it's okay for
+		// a first name to be specified without a last name.
+
 		// Too short.
 		$this->Employee->create();
-		$this->Employee->set(array('first_name' => '1'));
+		$this->Employee->set(array('id' => '1', 'first_name' => 'I'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), FALSE);
 
 		// Too long: 51 chars.
 		$this->Employee->create();
-		$this->Employee->set(array('first_name' =>
-			'123456789 123456789 123456789 123456789 123456789 1'));
+		$this->Employee->set(array(
+			'id' => '1',
+			'first_name' =>
+				'iiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXi',
+		));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), FALSE);
 	}
 
 	public function testBadLastNameLength()
 	{
+		// These tests are UPDATES (an 'id' is specified) so that it's okay for
+		// a last name to be specified without a first name.
+
 		// Too short.
 		$this->Employee->create();
-		$this->Employee->set(array('last_name' => '1'));
+		$this->Employee->set(array('id' => '1', 'last_name' => 'I'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), FALSE);
 
 		// Too long: 51 chars.
 		$this->Employee->create();
-		$this->Employee->set(array('last_name' =>
-			'123456789 123456789 123456789 123456789 123456789 1'));
+		$this->Employee->set(array(
+			'id' => '1',
+			'last_name' =>
+				'iiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXi',
+		));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), FALSE);
 	}
@@ -183,6 +255,17 @@ class EmployeeTest extends CakeTestCase {
 			'fieldList' => array('active'))), TRUE);
 	}
 
+	public function testGoodFirstNameFormat()
+	{
+		$this->Employee->create();
+		$this->Employee->set(array(
+			'id' => '1',
+			'first_name' => "O Briain-O'Connor-Jones",
+		));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('first_name'))), TRUE);
+	}
+
 	// In this test, 'id' is being specified as if we were performing an
 	// update. This is to prevent 'isUniqueComposite()' causing a validation
 	// failure when a first name is specified without a last name.
@@ -190,7 +273,7 @@ class EmployeeTest extends CakeTestCase {
 	{
 		// Minimum length: 2 chars.
 		$this->Employee->create();
-		$this->Employee->set(array('id' => '1', 'first_name' => '12'));
+		$this->Employee->set(array('id' => '1', 'first_name' => 'Ii'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), TRUE);
 
@@ -199,10 +282,21 @@ class EmployeeTest extends CakeTestCase {
 		$this->Employee->set(array(
 			'id' => '1',
 			'first_name' =>
-				'123456789 123456789 123456789 123456789 1234567890',
+				'iiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiX',
 		));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('first_name'))), TRUE);
+	}
+
+	public function testGoodLastNameFormat()
+	{
+		$this->Employee->create();
+		$this->Employee->set(array(
+			'id' => '1',
+			'last_name' => "O Briain-O'Connor-Jones",
+		));
+		$this->assertEqual($this->Employee->validates(array(
+			'fieldList' => array('last_name'))), TRUE);
 	}
 
 	// In this test, 'id' is being specified as if we were performing an
@@ -212,7 +306,7 @@ class EmployeeTest extends CakeTestCase {
 	{
 		// Minimum length: 2 chars.
 		$this->Employee->create();
-		$this->Employee->set(array('id' => '1', 'last_name' => '12'));
+		$this->Employee->set(array('id' => '1', 'last_name' => 'Ii'));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), TRUE);
 
@@ -221,7 +315,7 @@ class EmployeeTest extends CakeTestCase {
 		$this->Employee->set(array(
 			'id' => 1,
 			'last_name' =>
-				'123456789 123456789 123456789 123456789 1234567890',
+				'iiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiXiiiiiiiiiX',
 		));
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), TRUE);
