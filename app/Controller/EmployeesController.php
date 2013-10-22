@@ -11,7 +11,14 @@ class EmployeesController extends AppController
 	{
 		if ($this->request->is('post') == FALSE)
 		{
-			throw new MethodNotAllowedException();
+			throw new MethodNotAllowedException('Only POST allowed');
+		}
+
+		if (isset($this->request->data
+			[$this->Employee->alias][$this->Employee->primaryKey]) == TRUE)
+		{
+			throw new ForbiddenException(
+				"Primary key cannot be specified for an add");
 		}
 
 		$this->Employee->create();
@@ -29,6 +36,11 @@ class EmployeesController extends AppController
 
 	public function view($id = FALSE)
 	{
+		if ($this->request->is('get') == FALSE)
+		{
+			throw new MethodNotAllowedException('Only GET allowed');
+		}
+
 		$this->Employee->id = $id;
 		$this->Employee->read();
 
@@ -42,24 +54,44 @@ class EmployeesController extends AppController
 
 	public function view_active()
 	{
+		if ($this->request->is('get') == FALSE)
+		{
+			throw new MethodNotAllowedException('Only GET allowed');
+		}
+
 		$active = $this->Employee->findActive();
 		$this->output($active);
 	}
 
 	public function view_active_list()
 	{
+		if ($this->request->is('get') == FALSE)
+		{
+			throw new MethodNotAllowedException('Only GET allowed');
+		}
+
 		$activeList = $this->Employee->findActiveList();
 		$this->output($activeList);
 	}
 
 	public function view_inactive()
 	{
+		if ($this->request->is('get') == FALSE)
+		{
+			throw new MethodNotAllowedException('Only GET allowed');
+		}
+
 		$inactive = $this->Employee->findInactive();
 		$this->output($inactive);
 	}
 
 	public function view_inactive_list()
 	{
+		if ($this->request->is('get') == FALSE)
+		{
+			throw new MethodNotAllowedException('Only GET allowed');
+		}
+
 		$inactiveList = $this->Employee->findInactiveList();
 		$this->output($inactiveList);
 	}
