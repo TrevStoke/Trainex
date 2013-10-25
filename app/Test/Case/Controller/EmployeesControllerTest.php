@@ -30,8 +30,31 @@ class EmployeesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$result = $this->testAction('/employees/view/1');
-		debug($result);
+		$employeesMock = $this->generate('Employees', array(
+			'methods' => array(
+				'view',
+			),
+			'models' => array(
+				'Employee' => array('read'),
+			),
+		));
+
+		/*
+		$employeeFixture = new EmployeeFixture();
+		$employeeFixtureRecords = $employeeFixture->records;
+
+		$expected = $employeeFixtureRecords[0];
+		$expected['name'] =
+			$expected['first_name'] . ' ' . $expected['last_name'];
+		$expected = array('Employee' => $expected);
+
+		$response = $this->testAction('/employees/view/1', array(
+			'method' => 'GET',
+			'return' => 'vars',
+		));
+		$results = $response['results'];
+		$this->assertEqual($results, $expected);
+		*/
 	}
 
 /**

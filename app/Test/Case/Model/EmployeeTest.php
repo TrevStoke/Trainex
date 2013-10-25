@@ -5,6 +5,7 @@ App::uses('Employee', 'Model');
  * Employee Test Case
  *
  * @property Employee $Employee
+ * @property EmployeeFixture $EmployeeFixture
  */
 class EmployeeTest extends CakeTestCase {
 
@@ -17,6 +18,8 @@ class EmployeeTest extends CakeTestCase {
 		'app.employee'
 	);
 
+	public $employeeFixtureRecords;
+
 /**
  * setUp method
  *
@@ -25,6 +28,8 @@ class EmployeeTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Employee = ClassRegistry::init('Employee');
+		$this->EmployeeFixture = ClassRegistry::init('EmployeeFixture');
+		$this->employeeFixtureRecords = $this->EmployeeFixture->records;
 	}
 
 /**
@@ -34,7 +39,8 @@ class EmployeeTest extends CakeTestCase {
  */
 	public function tearDown() {
 		unset($this->Employee);
-
+		unset($this->EmployeeFixture);
+		unset($this->employeeFixtureRecords);
 		parent::tearDown();
 	}
 
@@ -103,7 +109,7 @@ class EmployeeTest extends CakeTestCase {
 		$this->assertEqual($this->Employee->validates(array(
 			'fieldList' => array('last_name'))), FALSE);
 
-		// Valid character, but not at end.
+		// Valid character, but not at start.
 		$this->Employee->create();
 		$this->Employee->set(array('id' => '1', 'last_name' => '-A'));
 		$this->assertEqual($this->Employee->validates(array(
@@ -162,11 +168,12 @@ class EmployeeTest extends CakeTestCase {
 
 	public function testBadNameDuplicate()
 	{
-		// 'Daniel Morton' already exists.
+		$existing = $this->employeeFixtureRecords[0];
+
 		$this->Employee->create();
 		$this->Employee->set(array(
-			'first_name' => 'Daniel',
-			'last_name' => 'Morton',
+			'first_name' => $existing['first_name'],
+			'last_name' => $existing['last_name'],
 		));
 		$this->assertEqual($this->Employee->validates(array('fieldList' =>
 			array('first_name', 'last_name'))), FALSE);

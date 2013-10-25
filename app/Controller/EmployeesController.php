@@ -9,7 +9,7 @@ class EmployeesController extends AppController
 {
 	public function add()
 	{
-		if ($this->request->is('post') == FALSE)
+		if ($this->request->is('POST') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only POST allowed');
 		}
@@ -36,7 +36,7 @@ class EmployeesController extends AppController
 
 	public function view($id = FALSE)
 	{
-		if ($this->request->is('get') == FALSE)
+		if ($this->request->is('GET') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only GET allowed');
 		}
@@ -54,7 +54,7 @@ class EmployeesController extends AppController
 
 	public function view_active()
 	{
-		if ($this->request->is('get') == FALSE)
+		if ($this->request->is('GET') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only GET allowed');
 		}
@@ -65,7 +65,7 @@ class EmployeesController extends AppController
 
 	public function view_active_list()
 	{
-		if ($this->request->is('get') == FALSE)
+		if ($this->request->is('GET') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only GET allowed');
 		}
@@ -76,7 +76,7 @@ class EmployeesController extends AppController
 
 	public function view_inactive()
 	{
-		if ($this->request->is('get') == FALSE)
+		if ($this->request->is('GET') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only GET allowed');
 		}
@@ -87,7 +87,7 @@ class EmployeesController extends AppController
 
 	public function view_inactive_list()
 	{
-		if ($this->request->is('get') == FALSE)
+		if ($this->request->is('GET') == FALSE)
 		{
 			throw new MethodNotAllowedException('Only GET allowed');
 		}

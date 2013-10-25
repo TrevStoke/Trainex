@@ -50,7 +50,7 @@ class EmployeeFixture extends CakeTestFixture {
 			'id' => '3',
 			'first_name' => 'Daniel',
 			'last_name' => 'Crick',
-			'active' => '1',
+			'active' => '0',
 			'created' => '2013-09-20 10:15:04',
 			'modified' => '2013-09-20 10:15:04'
 		),
