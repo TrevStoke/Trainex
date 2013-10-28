@@ -17,9 +17,9 @@ class Employee extends AppModel {
 
 	public $validate = array(
 		'active' => array(
-			'isBoolean' => array(
+			'boolean' => array(
 				'rule' => 'boolean',
-				'message' => 'Should be 0 or 1 (or equivalent)',
+				'message' => AppModel::validationMessageBoolean,
 				'required' => FALSE,
 				'allowEmpty' => TRUE,
 			),
@@ -27,45 +27,44 @@ class Employee extends AppModel {
 		'first_name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Missing or empty value',
+				'message' => AppModel::validationMessageNotEmpty,
 				'required' => 'create',
 				'allowEmpty' => FALSE, // Redundant?
 			),
-			'length' => array(
+			'between' => array(
 				'rule' => array('between', 2, 50),
-				'message' => 'Length range: %s to %s',
+				'message' => AppModel::validationMessageBetween,
 			),
-			'validateName' => array(
-				'rule' => array('validateName'),
-				'message' => 'Invalid name',
+			'format' => array(
+				'rule' => array('validateNameFormat'),
+				'message' => AppModel::validationMessageFormat,
 			),
-			'isUniqueComposite' => array(
+			'uniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
 					array('first_name', 'last_name')),
-				'message' =>
-					array('A record with those values already exists'),
+				'message' => 'A record with those values already exists',
+				'message' => AppModel::validationMessageUniqueComposite,
 			),
 		),
 		'last_name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Missing or empty value',
+				'message' => AppModel::validationMessageNotEmpty,
 				'required' => 'create',
 				'allowEmpty' => FALSE, // Redundant?
 			),
-			'length' => array(
+			'between' => array(
 				'rule' => array('between', 2, 50),
-				'message' => 'Length range: %s to %s',
+				'message' => AppModel::validationMessageBetween,
 			),
-			'validateName' => array(
-				'rule' => array('validateName'),
-				'message' => 'Invalid name',
+			'format' => array(
+				'rule' => array('validateNameFormat'),
+				'message' => AppModel::validationMessageFormat,
 			),
-			'isUniqueComposite' => array(
+			'uniqueComposite' => array(
 				'rule' => array('isUniqueComposite',
 					array('first_name', 'last_name')),
-				'message' =>
-					array('A record with those values already exists'),
+				'message' => AppModel::validationMessageUniqueComposite,
 			),
 		),
 	);
@@ -119,7 +118,7 @@ class Employee extends AppModel {
 		));
 	}
 
-	public function validateName($field)
+	public function validateNameFormat($field)
 	{
 		$fieldValue = reset($field);
 		$errorMsg = 'Invalid format';

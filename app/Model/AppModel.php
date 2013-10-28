@@ -32,5 +32,13 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+	// Standard validation error messages.
+	const validationMessageBetween = 'Length range: %s to %s';
+	const validationMessageBoolean = 'Should be 0 or 1 (or equivalent)';
+	const validationMessageFormat = 'Invalid format';
+	const validationMessageNotEmpty = 'Missing or empty value';
+	const validationMessageUniqueComposite =
+		'A record with those values already exists';
+
 	public $recursive = -1;
 }
