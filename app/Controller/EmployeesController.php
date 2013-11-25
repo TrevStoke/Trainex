@@ -18,7 +18,7 @@ class EmployeesController extends AppController
 			[$this->Employee->alias][$this->Employee->primaryKey]) == TRUE)
 		{
 			throw new ForbiddenException(
-				"Primary key cannot be specified for an add");
+				'Primary key cannot be specified for an add');
 		}
 
 		$this->Employee->create();
