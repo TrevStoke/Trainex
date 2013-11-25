@@ -31,6 +31,7 @@ class EmployeesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
+		/*
 		$employeesMock = $this->generate('Employees', array(
 			'methods' => array(
 				'beforeFilter',
@@ -38,19 +39,17 @@ class EmployeesControllerTest extends ControllerTestCase {
 				'outputError',
 				'view',
 			),
-			/*
-			'models' => array(
-				'Employee' => array('read'),
-			),
-			*/
+//			'models' => array(
+//				'Employee' => array('read'),
+//			),
 		));
 		$response = $this->testAction('/employees/view/1', array(
 			'method' => 'GET',
 			'return' => 'vars',
 		));
 		Debugger::dump($response);
+		*/
 
-		/*
 		$employeeFixture = new EmployeeFixture();
 		$employeeFixtureRecords = $employeeFixture->records;
 
@@ -65,7 +64,6 @@ class EmployeesControllerTest extends ControllerTestCase {
 		));
 		$results = $response['results'];
 		$this->assertEqual($results, $expected);
-		*/
 	}
 
 /**
