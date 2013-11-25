@@ -25,6 +25,30 @@ class EmployeesControllerTest extends ControllerTestCase {
 	public function testAdd() {
 	}
 
+	public function testViewBadMethodPost()
+	{
+		$this->expectException(
+			'MethodNotAllowedException', 'Only GET allowed');
+		$this->testAction('/employees/view/1',
+			array('method' => 'POST'));
+	}
+
+	public function testViewBadId()
+	{
+		// Doesn't work because any one exception will cause the test to get
+		// the exception it's looking for, even if some tests don't generate
+		// the required exception.
+
+		$badIds = array('', '1');
+
+		foreach ($badIds as $badId)
+		{
+			$this->expectException('NotFoundException');
+			$this->testAction("/employees/view/$badId",
+				array('method' => 'GET'));
+		}
+	}
+
 /**
  * testView method
  *
